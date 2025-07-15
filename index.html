@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Guest Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Loading State -->
+        <div id="loading" class="loading-screen">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <h2>Loading Wedding Details...</h2>
+                <p>Please wait while we fetch the latest information</p>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="error-screen" style="display: none;">
+            <div class="error-content">
+                <div class="error-icon">⚠️</div>
+                <h2>Wedding Not Found</h2>
+                <p>We couldn't find the wedding information. Please check your QR code or contact the wedding couple.</p>
+                <button onclick="location.reload()" class="retry-button">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="main-content" style="display: none;">
+            <!-- Navigation -->
+            <nav class="main-nav">
+                <div class="nav-container">
+                    <h1 class="nav-title" id="wedding-title">Wedding</h1>
+                    <div class="nav-tabs">
+                        <button class="nav-tab active" data-tab="info">Info</button>
+                        <button class="nav-tab" data-tab="timeline">Timeline</button>
+                        <button class="nav-tab" data-tab="photos">Photos</button>
+                        <button class="nav-tab" data-tab="quiz">Quiz</button>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content Sections -->
+            <main class="main-content">
+                <!-- Wedding Info Tab -->
+                <section id="info-tab" class="tab-content active">
+                    <div class="tab-header">
+                        <div class="header-icon">💒</div>
+                        <h2>Wedding Information</h2>
+                        <p>All the details you need for our special day</p>
+                    </div>
+
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <h3>Date & Time</h3>
+                            <div class="info-details">
+                                <div class="info-item">
+                                    <span class="info-label">Date:</span>
+                                    <span class="info-value" id="wedding-date">Loading...</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Time:</span>
+                                    <span class="info-value" id="wedding-time">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <h3>Venue</h3>
+                            <div class="info-details">
+                                <div class="info-item">
+                                    <span class="info-label">Location:</span>
+                                    <span class="info-value" id="venue-name">Loading...</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Address:</span>
+                                    <span class="info-value" id="venue-address">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card" id="welcome-card" style="display: none;">
+                            <h3>Welcome Message</h3>
+                            <div class="info-details">
+                                <p class="welcome-quote" id="welcome-quote"></p>
+                                <p class="couple-message" id="couple-message"></p>
+                            </div>
+                        </div>
+
+                        <div class="info-card" id="dress-code-card" style="display: none;">
+                            <h3>Dress Code</h3>
+                            <div class="info-details">
+                                <p id="dress-code"></p>
+                            </div>
+                        </div>
+
+                        <div class="info-card" id="gift-info-card" style="display: none;">
+                            <h3>Gift Information</h3>
+                            <div class="info-details">
+                                <p id="gift-info"></p>
+                            </div>
+                        </div>
+
+                        <div class="info-card" id="contact-card" style="display: none;">
+                            <h3>Contact Information</h3>
+                            <div class="info-details">
+                                <p id="contact-info"></p>
+                            </div>
+                        </div>
+
+                        <div class="info-card" id="parking-card" style="display: none;">
+                            <h3>Parking Information</h3>
+                            <div class="info-details">
+                                <p id="parking-info"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Countdown Timer -->
+                    <div class="countdown-container">
+                        <h3>Countdown to the Big Day</h3>
+                        <div class="countdown" id="countdown">
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="days">0</span>
+                                <span class="countdown-label">Days</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="hours">0</span>
+                                <span class="countdown-label">Hours</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="minutes">0</span>
+                                <span class="countdown-label">Minutes</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="seconds">0</span>
+                                <span class="countdown-label">Seconds</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Timeline Tab -->
+                <section id="timeline-tab" class="tab-content">
+                    <div class="tab-header">
+                        <div class="header-icon">📅</div>
+                        <h2>Wedding Timeline</h2>
+                        <p>Schedule of events for our special day</p>
+                    </div>
+
+                    <div class="timeline-container" id="timeline-events">
+                        <!-- Timeline events will be populated here -->
+                    </div>
+                </section>
+
+                <!-- Photos Tab -->
+                <section id="photos-tab" class="tab-content">
+                    <div class="tab-header">
+                        <div class="header-icon">📸</div>
+                        <h2>Wedding Photos</h2>
+                        <p>Beautiful moments from our special day</p>
+                    </div>
+
+                    <div class="photo-gallery" id="photo-gallery">
+                        <!-- Photos will be populated here -->
+                    </div>
+
+                    <div class="no-photos" id="no-photos" style="display: none;">
+                        <div class="no-photos-icon">📷</div>
+                        <h3>No Photos Yet</h3>
+                        <p>Photos will appear here once they're uploaded!</p>
+                    </div>
+                </section>
+
+                <!-- Quiz Tab -->
+                <section id="quiz-tab" class="tab-content">
+                    <div class="tab-header">
+                        <div class="header-icon">❓</div>
+                        <h2>Wedding Quiz</h2>
+                        <p>Test your knowledge about the happy couple</p>
+                    </div>
+
+                    <div class="quiz-container" id="quiz-container">
+                        <!-- Quiz will be populated here -->
+                    </div>
+
+                    <div class="no-quiz" id="no-quiz" style="display: none;">
+                        <div class="no-quiz-icon">🤔</div>
+                        <h3>No Quiz Available</h3>
+                        <p>The couple hasn't created a quiz yet!</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="photo-modal" style="display: none;">
+        <div class="photo-modal-content">
+            <button class="photo-modal-close" onclick="closePhotoModal()">&times;</button>
+            <img id="modal-photo" src="" alt="Wedding Photo">
+            <div class="photo-modal-info">
+                <h4 id="modal-photo-title"></h4>
+                <p id="modal-photo-uploader"></p>
+                <p id="modal-photo-date"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
